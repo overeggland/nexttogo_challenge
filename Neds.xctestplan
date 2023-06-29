@@ -1,0 +1,47 @@
+{
+  "configurations" : [
+    {
+      "id" : "C7F93A53-4D66-4922-95AE-487CEB2E9915",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:Neds.xcodeproj",
+          "identifier" : "637782992A442442008E6BCD",
+          "name" : "Neds"
+        }
+      ]
+    },
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:Neds.xcodeproj",
+      "identifier" : "637782992A442442008E6BCD",
+      "name" : "Neds"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Neds.xcodeproj",
+        "identifier" : "637782A92A442444008E6BCD",
+        "name" : "NedsTests"
+      }
+    },
+    {
+      "enabled" : false,
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Neds.xcodeproj",
+        "identifier" : "637782B32A442444008E6BCD",
+        "name" : "NedsUITests"
+      }
+    }
+  ],
+  "version" : 1
+}
