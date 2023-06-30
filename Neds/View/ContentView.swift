@@ -13,10 +13,14 @@ struct ContentView: View {
     
     @StateObject var vm = ViewModel()
     @State var timerForRepos = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @State var showFlag = true
     
     var body: some View {
         NavigationView {
             VStack{
+                if showFlag {
+                    ProgressView()
+                }
                 List {
                     ForEach(0..<vm.seletedRaceList.count,id: \.self) { index in
                         let model = vm.seletedRaceList[index]
@@ -28,6 +32,7 @@ struct ContentView: View {
                     }
                 }.onReceive(timerForRepos, perform: { time in
                     vm.updateUIData()
+                    showFlag = vm.seletedRaceList.isEmpty
                 })
                 Picker(vm: vm.categoriesVM)
                 Spacer(minLength: 30)
@@ -69,5 +74,21 @@ struct DetailView: View {
             Text("categoryID:\n\(model.categoryId)")
             Text("meetingName:\(model.meetingName)")
         }.navigationTitle("Race Detail")
+    }
+}
+
+struct GaugeProgressStyle: ProgressViewStyle {
+    var strokeColor = Color.blue
+    var strokeWidth = 25.0
+
+    func makeBody(configuration: Configuration) -> some View {
+        let fractionCompleted = configuration.fractionCompleted ?? 0
+
+        return ZStack {
+            Circle()
+                .trim(from: 0, to: fractionCompleted)
+                .stroke(strokeColor, style: StrokeStyle(lineWidth: strokeWidth, lineCap: .round))
+                .rotationEffect(.degrees(-90))
+        }
     }
 }
