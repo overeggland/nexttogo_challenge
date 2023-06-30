@@ -41,7 +41,7 @@ struct RaceSummary: Decodable {
 }
 
 // MARK: - AdvertisedStart
-struct AdvertisedStart: Codable, Comparable {
+struct AdvertisedStart: Decodable, Comparable {
     let seconds: Int
     
     static func > (lhs: Self, rhs: Self) -> Bool {

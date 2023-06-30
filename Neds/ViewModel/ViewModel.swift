@@ -15,11 +15,11 @@ enum RaceCategory : String {
 
 final class ViewModel: ObservableObject {
     
-    /// Picker ViewModel
-    var categoriesVM: PickerViewModel = FileService.categoryModel
-    
     /// selected all races
     @Published var seletedRaceList:[RaceSummary] = []
+    
+    /// Picker ViewModel
+    var categoriesVM: PickerViewModel = FileService.categoryModel
     
     /// all Races
     var allRaceList:[RaceSummary] = []
