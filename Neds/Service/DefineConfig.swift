@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 let Space_Line:CGFloat = 10
 let kContentNavBarHeight = 44.0

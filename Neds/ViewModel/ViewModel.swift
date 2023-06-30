@@ -99,6 +99,9 @@ final class ViewModel: ObservableObject {
         var greyhoundCount = 0, harnessCount = 0, horseCount = 0
         
         do {
+            ///1. frist transform to array
+            ///2. filter those unexpired races
+            ///3. ordered by start time
             let result = try raw.map { $0.value }.filter {
                 let include = ($0.advertisedStart.timeStamp - nowTimeStamp) > Config.kExpireInterval
                 if include {
@@ -110,8 +113,10 @@ final class ViewModel: ObservableObject {
                     }
                     
                     /// if one category has less than 5 races
-                    ///  we set a benchmark of 100 as max datapool
-                    if (greyhoundCount < Config.kDisplayNumber || harnessCount < Config.kDisplayNumber || horseCount < Config.kDisplayNumber) && raw.count == self.count {
+                    /// we set 100 as max datapool benchmark
+                    if raw.count == self.count,
+                       let _ = [greyhoundCount, harnessCount, horseCount].first(where:{$0>Config.kDisplayNumber})
+                    {
                         throw GeneralError.notEnoughDataFound
                     }
                 }
