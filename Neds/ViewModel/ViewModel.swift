@@ -35,7 +35,7 @@ final class ViewModel: ObservableObject {
     
     /// UI updated
     func updateUIData() {
-        print("updateData")
+        print("update races")
         
         self.seletedCategoryIDList = self.categoriesVM.categories.filter{ $0.isSeleted }.map { $0.categoryId }
         

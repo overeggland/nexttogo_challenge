@@ -13,12 +13,22 @@ struct Network {
         guard count < Config.kMaxCount else {
             throw NetworkError.loadCountTooLarge
         }
-        print("request count = \(count)")
+        print("network load = \(count)")
         let url: URL = URL(string: Config.kNextRacesUrl+"\(count)")!
         
         do {
-            let (data, _) = try await URLSession.shared.data(from: url)
+            ///request
+            let request = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5.0)
             
+            ///header
+            let configuration = URLSessionConfiguration.default
+            configuration.httpAdditionalHeaders = ["Content-type": "application/json"]
+            let session = URLSession(configuration: configuration)
+            
+            ///URLSession
+            let (data, _) = try await session.data(for: request)
+
+            ///decoder
             let model = try JSONDecoder().snake.decode(NextToGoModel.self, from: data)
             if model.status == 200 && !model.data.raceSummaries.isEmpty {
                 return model.data.raceSummaries
