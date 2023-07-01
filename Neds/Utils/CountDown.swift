@@ -46,7 +46,7 @@ typealias RaceInfoExtra = (interval:String, textColor:Color, accessibilityLabel:
 
 extension CountDown {
     
-    static func processTimeStamp(model:RaceSummary) -> RaceInfoExtra {
+    static func processTimeStamp(_ model:RaceSummary) -> RaceInfoExtra {
 
         let interval: TimeInterval = model.advertisedStart.timeStamp - Date().timeIntervalSince1970
         let status = Status(rawValue: interval)

@@ -22,9 +22,8 @@ struct ContentView: View {
                     ProgressView()
                 }
                 List {
-                    ForEach(0..<vm.seletedRaceList.count,id: \.self) { index in
-                        let model = vm.seletedRaceList[index]
-                        let raceInfo = CountDown.processTimeStamp(model: model)
+                    ForEach(vm.seletedRaceList, id: \.self) { model in
+                        let raceInfo = CountDown.processTimeStamp(model)
                         let cellVM = CellViewModel(model: model, raceInfo: raceInfo)
                         NavigationLink(destination:DetailView(model: model)) {
                             RaceCell(viewModel: cellVM)
@@ -40,7 +39,6 @@ struct ContentView: View {
             
         }.navigationViewStyle(.stack).onAppear{
             self.resetTimer()
-            
             Task {
                 await vm.fetchRaceList()
             }

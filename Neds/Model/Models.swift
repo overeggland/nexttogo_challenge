@@ -32,12 +32,17 @@ struct NextToGoModel: Decodable {
 }
 
 // MARK: - RaceSummary
-struct RaceSummary: Decodable {
+struct RaceSummary: Decodable, Hashable {
     let raceId: String
     let raceName: String?
     let raceNumber: Int
     let meetingId, meetingName, categoryId: String
     let advertisedStart: AdvertisedStart
+    
+    ///raceId is unique
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(raceId + categoryId + meetingId)
+    }
 }
 
 // MARK: - AdvertisedStart
