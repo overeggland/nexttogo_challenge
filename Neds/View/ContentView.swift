@@ -42,7 +42,8 @@ struct ContentView: View {
             Task {
                 await vm.fetchRaceList()
             }
-            NotificationCenter.default.addObserver(forName: UIAccessibility.voiceOverStatusDidChangeNotification, object: nil, queue: .main) { noti in
+            NotificationCenter.default.addObserver(forName: UIAccessibility.voiceOverStatusDidChangeNotification,
+                                                   object: nil, queue: .main) { noti in
                 self.resetTimer()
             }
         }
@@ -72,21 +73,5 @@ struct DetailView: View {
             Text("categoryID:\n\(model.categoryId)")
             Text("meetingName:\(model.meetingName)")
         }.navigationTitle("Race Detail")
-    }
-}
-
-struct GaugeProgressStyle: ProgressViewStyle {
-    var strokeColor = Color.blue
-    var strokeWidth = 25.0
-
-    func makeBody(configuration: Configuration) -> some View {
-        let fractionCompleted = configuration.fractionCompleted ?? 0
-
-        return ZStack {
-            Circle()
-                .trim(from: 0, to: fractionCompleted)
-                .stroke(strokeColor, style: StrokeStyle(lineWidth: strokeWidth, lineCap: .round))
-                .rotationEffect(.degrees(-90))
-        }
     }
 }
