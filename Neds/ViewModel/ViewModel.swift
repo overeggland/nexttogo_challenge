@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Dispatch
 
 enum RaceCategory : String {
     case greyhoundCategory = "9daef0d7-bf3c-4f50-921d-8e818c60fe61"
@@ -28,7 +29,7 @@ final class ViewModel: ObservableObject {
     var seletedCategoryIDList:[String] = []
     
     /// net work load race count
-    private var count = 20
+    private var count = Config.kInitialRequestCount
     
     /// stop repeat request
     private var requesting = false
@@ -39,7 +40,7 @@ final class ViewModel: ObservableObject {
         
         self.seletedCategoryIDList = self.categoriesVM.categories.filter{ $0.isSeleted }.map { $0.categoryId }
         
-        // iterate the data source
+        /// iterate the data source
         var count: Int = 0
         let filterList = self.allRaceList.filter {
             guard count < Config.kDisplayNumber else {
@@ -54,7 +55,7 @@ final class ViewModel: ObservableObject {
             return false
         }
         
-        // less than 5 reload
+        /// less than 5 reload
         if filterList.count < Config.kDisplayNumber {
             // stop repeat
             if self.requesting {
@@ -64,6 +65,8 @@ final class ViewModel: ObservableObject {
                 await self.fetchRaceList()
             }
         } else {
+            /// decend to initial count
+            self.count = Config.kInitialRequestCount
             DispatchQueue.main.async {
                 self.seletedRaceList = filterList
             }
@@ -75,12 +78,18 @@ final class ViewModel: ObservableObject {
         self.requesting = true
         do {
             let orginData = try await Network.fetchNextRacesInfo(count: self.count)
-            let filter = self.filterRaceData(raw: orginData)
+            let filteredData = self.filterRaceData(raw: orginData)
             
-            switch filter {
+            switch filteredData {
             case .failure(_):
-                // not enough data, enlarge the number of data loading.
+                /// not enough data, enlarge the number of data loading, 80 at max
                 self.count *= 2;
+                ///if reach the max count, wait 5s to have another request
+                ///frequency control
+                if (self.count > Config.kMaxCount) {
+                    try await Task.sleep(nanoseconds: 5_000_000_000)
+                    self.count = Config.kMaxCount
+                }
                 await self.fetchRaceList()
             case .success(let data):
                 self.allRaceList = data

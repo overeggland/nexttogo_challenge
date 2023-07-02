@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class PickerViewModel :ObservableObject {
+final class PickerViewModel : ObservableObject {
     @Published var categories: [Category]
     
     init(categories: [Category]) {

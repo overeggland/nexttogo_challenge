@@ -30,6 +30,7 @@ final class CellContent : UIView {
     
     init(model:Category) {
         self.model = model
+        
         super.init(frame: CGRectZero)
         
         self.layer.borderWidth = 2;

@@ -10,7 +10,7 @@ import Foundation
 struct Network {
     
     static func fetchNextRacesInfo(count: Int) async throws -> [String: RaceSummary] {
-        guard count < Config.kMaxCount else {
+        guard count < Config.kMaxCount + 1 else {
             throw NetworkError.loadCountTooLarge
         }
         print("network load = \(count)")
