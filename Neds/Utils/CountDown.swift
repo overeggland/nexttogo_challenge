@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 ///4 status of a race
-enum Status : TimeInterval, CaseIterable {
+private enum Status : TimeInterval, CaseIterable {
     case started = 0
     case countdown = 60
     case minites = 300
