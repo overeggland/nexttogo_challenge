@@ -1,13 +1,11 @@
 
-## Easy to Go Note
+# Easy to Go Note
 
-ScreenShots
+## ScreenShots
 
-Normal
-![](./Neds/Documentation/images/image1.png)
-Scalable
-![](./Neds/Documentation/images/image3.png)
-
+| Normal           | Scalable       |
+| -------------    | ------------- |
+|![](./Neds/Documentation/images/image1.png)  | ![](./Neds/Documentation/images/image3.png) |
 
 ## Architecture
 ![](./Neds/Documentation/images/image2.png)
